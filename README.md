@@ -35,18 +35,22 @@ Dispondrás de campo llamado *OpenAI API Key* para añadir tu propia clave desde
 
 ## Instrucciones
 
-1. **Completa los datos**
-	2. **Nombre del equipo**: El nombre que desees *(MoureDev)*.
-	3. **¿A qué juegas?**: El nombre del juego en el que se va a inspirar el logotipo *(Diablo II)*.
-	4. **Referencia principal**: El elemento principal del logotipo *(Fuego)*.
-5. **Añade información** *(Opcional)*
-	6. **Iniciar grabación (Whisper)**: Graba un audio con información adicional *(Jugamos a Diablo II, me gustaría que el logo añada una calavera y mucho fuego)*.
-	7. **Resumir (GPT-3.5)**: Extrae las palabras clave del audio *(juego, diablo, calavera, mucho fuego)*.
-8. **Genera el logo**
-	9. **Generar (DALL·E)** *(Diseño Tenerife GG OFF)*: Crea un logotipo con la información proporcionada.
-	10. **Generar (DALL·E)** *(Diseño Tenerife GG ON)*: Crea un logotipo con la información proporcionada y una máscara predeterminada.
-	11. **Copiar**: Guarda la URL del logotipo para descargarlo desde el explorador web.
+#### Completa los datos
 
+* **Nombre del equipo**: El nombre que desees *(MoureDev)*.
+* **¿A qué juegas?**: El nombre del juego en el que se va a inspirar el logotipo *(Diablo II)*.
+* **Referencia principal**: El elemento principal del logotipo *(Fuego)*.
+
+#### Añade información** *(Opcional)*
+
+* **Iniciar grabación (Whisper)**: Graba un audio con información adicional *(Jugamos a Diablo II, me gustaría que el logo añada una calavera y mucho fuego)*.
+* **Resumir (GPT-3.5)**: Extrae las palabras clave del audio *(juego, diablo, calavera, mucho fuego)*.
+
+#### Genera el logo
+
+* **Generar (DALL·E)** *(Diseño Tenerife GG OFF)*: Crea un logotipo con la información proporcionada.
+* **Generar (DALL·E)** *(Diseño Tenerife GG ON)*: Crea un logotipo con la información proporcionada y una máscara predeterminada.
+* **Copiar**: Guarda la URL del logotipo para descargarlo desde el explorador web.
 
 <table style="width:100%">
 <tr>
@@ -67,8 +71,6 @@ Dispondrás de campo llamado *OpenAI API Key* para añadir tu propia clave desde
 </td>
 </tr>
 </table>
-
--
 
 #### Puedes apoyar mi trabajo haciendo "☆ Star" en el repo o nominarme a "GitHub Star". ¡Gracias!
 
