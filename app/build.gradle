@@ -48,6 +48,7 @@ android {
 
 dependencies {
 
+    // Core
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
@@ -61,7 +62,6 @@ dependencies {
 
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.7.1'
 
     // OpenAI
     implementation 'com.aallam.openai:openai-client:3.3.0'
@@ -69,19 +69,11 @@ dependencies {
     // Ktor
     implementation 'io.ktor:ktor-client-android:2.3.2'
     implementation 'io.ktor:ktor-client-okhttp:2.3.2'
-    implementation 'io.ktor:ktor-client-serialization:2.3.2'
-    implementation 'io.ktor:ktor-client-logging-jvm:2.3.2'
-    implementation 'io.ktor:ktor-client-content-negotiation:2.3.2'
-    implementation 'io.ktor:ktor-client-auth:2.3.2'
-    implementation 'io.ktor:ktor-serialization-kotlinx-json:2.3.2'
-
-    // Log
-    implementation 'org.slf4j:slf4j-api:2.0.7'
-    implementation 'com.github.tony19:logback-android:3.0.0'
 
     // Async Image
     implementation 'io.coil-kt:coil-compose:2.4.0'
 
+    // Test
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

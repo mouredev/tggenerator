@@ -16,14 +16,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
  * www.mouredev.com
  */
 @Composable
-fun ActionButton(text: String,
-                 description: String,
-                 enabled: Boolean = true,
-                 icon: ImageVector,
-                 onClick: () -> Unit) {
+fun ActionButton(
+    text: String,
+    icon: ImageVector,
+    description: String,
+    enabled: Boolean = true,
+    onClick: () -> Unit) {
 
     Button(
-        onClick = { onClick() },
+        onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         enabled = enabled
     ) {
@@ -36,6 +37,5 @@ fun ActionButton(text: String,
             contentDescription = description,
             modifier = Modifier.size(ButtonDefaults.IconSize)
         )
-
     }
 }

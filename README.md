@@ -72,6 +72,12 @@ Dispondrás de campo llamado *OpenAI API Key* para añadir tu propia clave desde
 </tr>
 </table>
 
+## Tutorial en vídeo
+
+<a href="https://youtu.be/7wXJPIiSolo"><img src="http://i3.ytimg.com/vi/7wXJPIiSolo/maxresdefault.jpg" style="height: 50%; width:50%;"/></a>
+
+Tutorial con todo el proceso de creación de la aplicación desde cero.
+
 #### Puedes apoyar mi trabajo haciendo "☆ Star" en el repo o nominarme a "GitHub Star". ¡Gracias!
 
 [![GitHub Star](https://img.shields.io/badge/GitHub-Nominar_a_star-yellow?style=for-the-badge&logo=github&logoColor=white&labelColor=101010)](https://stars.github.com/nominate/)
@@ -92,7 +98,7 @@ Si quieres unirte a nuestra comunidad de desarrollo, aprender programación de A
 ![GitHub Followers](https://img.shields.io/github/followers/mouredev?style=social)
 ![GitHub Followers](https://img.shields.io/github/stars/mouredev?style=social)
 
-Soy ingeniero de software desde hace más de 12 años. Desde hace 4 años combino mi trabajo desarrollando Apps con creación de contenido formativo sobre programación y tecnología en diferentes redes sociales como **[@mouredev](https://moure.dev)**.
+Soy ingeniero de software desde hace más de 13 años. Desde hace 5 años combino mi trabajo desarrollando Apps con creación de contenido formativo sobre programación y tecnología en diferentes redes sociales como **[@mouredev](https://moure.dev)**.
 
 ### En mi perfil de GitHub tienes más información
 

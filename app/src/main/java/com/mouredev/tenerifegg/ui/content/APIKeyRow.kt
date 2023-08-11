@@ -12,10 +12,11 @@ import com.mouredev.tenerifegg.ui.components.CharacterTextField
  * www.mouredev.com
  */
 @Composable
-fun APIKeyRow(context: Context,
-              viewModel: LogoGeneratorViewModel,
-              apiKey: String,
-              onAPIKeyChanged: (String) -> Unit) {
+fun APIKeyRow(
+    context: Context,
+    viewModel: LogoGeneratorViewModel,
+    apiKey: String,
+    onAPIKeyChanged: (String) -> Unit) {
 
     if (Env.OPENAI_API_KEY.isEmpty()) {
 
@@ -26,7 +27,7 @@ fun APIKeyRow(context: Context,
         }
 
         Row {
-            CharacterTextField("OpenAI API Key", currentAPIKey, onTextChanged = {
+            CharacterTextField("OpenAI API Key", currentAPIKey, onValueChange = {
 
                 viewModel.setCustomAPIKey(context, if (it.length == 51) it else "")
 

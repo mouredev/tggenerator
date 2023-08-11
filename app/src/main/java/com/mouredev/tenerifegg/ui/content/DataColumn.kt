@@ -12,19 +12,22 @@ import com.mouredev.tenerifegg.ui.components.TitleText
  * www.mouredev.com
  */
 @Composable
-fun DataColumn(team: String, games: String, reference: String,
-                       onTeamChanged: (String) -> Unit,
-                       onGamesChanged: (String) -> Unit,
-                       onReferenceChanged: (String) -> Unit) {
+fun DataColumn(
+    team: String,
+    games: String,
+    elements: String,
+    onTeamChanged: (String) -> Unit,
+    onGamesChanged: (String) -> Unit,
+    onElementsChange: (String) -> Unit) {
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
         TitleText("1. Completa los datos")
 
-        CharacterTextField("Nombre del equipo", team, onTextChanged = onTeamChanged)
+        CharacterTextField("Nombre del equipo", team, onTeamChanged)
 
-        CharacterTextField("¿A qué juegas?", games, onTextChanged = onGamesChanged)
+        CharacterTextField("¿A qué juegas?", games, onGamesChanged)
 
-        CharacterTextField("Referencia principal", reference, onTextChanged = onReferenceChanged)
+        CharacterTextField("Referencia principal", elements, onElementsChange)
     }
 }

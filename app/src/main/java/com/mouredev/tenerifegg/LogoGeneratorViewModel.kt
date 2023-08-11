@@ -41,12 +41,13 @@ class LogoGeneratorViewModel : ViewModel() {
     var info: String by mutableStateOf("")
 
     var loading: Boolean by mutableStateOf(false)
+    var recording: Boolean by mutableStateOf(false)
+
     var error: Boolean by mutableStateOf(false)
     var apiError: Boolean by mutableStateOf(false)
 
     private var recorder: AudioRecorder? = null
     private var audioFile: File? = null
-    var recording = false
 
     init {
         apiError = Env.OPENAI_API_KEY.isEmpty()
@@ -70,24 +71,22 @@ class LogoGeneratorViewModel : ViewModel() {
         }
     }
 
-    // Transcripción
-    @OptIn(BetaOpenAI::class)
-    private fun loadAdditionalInfo(context: Context, file: File?) = viewModelScope.launch {
-
-        startLoading()
-
-        val source = file?.source() ?: context.resources.openRawResource(R.raw.audio).source()
-
-        val transcriptionRequest = TranscriptionRequest(
-            audio = FileSource(name = Conf.AUDIO_FILE, source = source),
-            model = ModelId(Conf.WHISPER_MODEL),
-        )
-
-        val transcription = openAI.transcription(transcriptionRequest)
-
-        info = transcription.text
-
-        endLoading()
+    // Audio
+    fun recordAudio(context: Context) {
+        if (recording) {
+            recording = false
+            recorder?.stop()
+            loadInfo(audioFile)
+        } else {
+            if (recorder == null) {
+                recorder = AudioRecorder(context)
+            }
+            File(context.cacheDir, Conf.AUDIO_FILE).also {
+                recorder?.record(it)
+                audioFile = it
+                recording = true
+            }
+        }
     }
 
     // Resumen
@@ -101,11 +100,11 @@ class LogoGeneratorViewModel : ViewModel() {
             messages = listOf(
                 ChatMessage(
                     role = ChatRole.System,
-                    content = "Eres un asistente especializado en resumir textos de manera extremadamente concisa."
+                    content = "Eres un asistente especializado en resumir texto de manera extremadamente concisa y eficaz"
                 ),
                 ChatMessage(
                     role = ChatRole.User,
-                    content = "Lista las palabras clave del siguiente texto: “${info}”."
+                    content = "Lista las palabras clave del siguiente texto: $info"
                 )
             )
         )
@@ -117,16 +116,18 @@ class LogoGeneratorViewModel : ViewModel() {
 
     // Generación
     @OptIn(BetaOpenAI::class)
-    fun generateLogo(context: Context,
-                     masked: Boolean,
-                     games: String,
-                     reference: String,
-                     imageUrl: (String) -> Unit) = viewModelScope.launch {
+    fun generateLogo(
+        context: Context,
+        games: String,
+        elements: String,
+        masked: Boolean,
+        imageURL: (String) -> Unit
+    ) = viewModelScope.launch {
 
         startLoading()
 
         try {
-            var prompt = "eSports logo, ${games.trim()}, ${reference.trim()}, vector logo, "
+            var prompt = "eSports logo, vector logo, ${games.trim()}, ${elements.trim()}, "
 
             if (info.isNotEmpty()) {
                 prompt += " ${info.trim()}"
@@ -135,6 +136,7 @@ class LogoGeneratorViewModel : ViewModel() {
             val images: List<ImageURL>
 
             if (masked) {
+
                 images = openAI.imageURL(ImageEdit(
                     image = FileSource(
                         name = Conf.IMAGE_FILE,
@@ -149,16 +151,14 @@ class LogoGeneratorViewModel : ViewModel() {
                     size = ImageSize.is1024x1024
                 ))
             } else {
-                images = openAI.imageURL(
-                    creation = ImageCreation(
-                        prompt = prompt,
-                        n = 1,
-                        size = ImageSize.is1024x1024
-                    )
-                )
+                images = openAI.imageURL(creation = ImageCreation(
+                    prompt,
+                    n = 1,
+                    size = ImageSize.is1024x1024
+                ))
             }
 
-            imageUrl(images.first().url)
+            imageURL(images.first().url)
 
         } catch (e: Exception) {
             println(e)
@@ -168,21 +168,24 @@ class LogoGeneratorViewModel : ViewModel() {
         }
     }
 
-    // Audio
-    fun recordAudio(context: Context) {
-        if (recording) {
-            recording = false
-            recorder?.stop()
-            loadAdditionalInfo(context, audioFile)
-        } else {
-            if (recorder == null) {
-                recorder = AudioRecorder(context)
-            }
-            File(context.cacheDir, Conf.AUDIO_FILE).also {
-                recorder?.record(it)
-                audioFile = it
-                recording = true
-            }
+    // Transcripción
+    @OptIn(BetaOpenAI::class)
+    private fun loadInfo(file: File?) = viewModelScope.launch {
+
+        file?.source()?.let {
+
+            startLoading()
+
+            val transcriptionRequest = TranscriptionRequest(
+                audio = FileSource(name = Conf.AUDIO_FILE, source = it),
+                model = ModelId(Conf.WHISPER_MODEL)
+            )
+
+            val transcription = openAI.transcription(transcriptionRequest)
+
+            info = transcription.text
+
+            endLoading()
         }
     }
 

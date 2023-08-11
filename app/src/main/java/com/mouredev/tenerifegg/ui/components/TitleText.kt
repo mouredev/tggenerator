@@ -12,5 +12,5 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun TitleText(text: String) {
-    Text(text = text.uppercase(), fontWeight = FontWeight.Bold, fontSize = 16.sp)
+    Text(text.uppercase(), fontSize = 16.sp, fontWeight = FontWeight.Bold)
 }

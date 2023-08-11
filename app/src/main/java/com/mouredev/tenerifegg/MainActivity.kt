@@ -76,6 +76,12 @@ private fun Content() {
     val viewModel = LogoGeneratorViewModel()
     val scrollState = rememberScrollState()
 
+    var apiKey by remember { mutableStateOf("") }
+
+    var team by remember { mutableStateOf("") }
+    var games by remember { mutableStateOf("") }
+    var elements by remember { mutableStateOf("") }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -99,6 +105,7 @@ private fun Content() {
             )
         }
     ) { padding ->
+
         if (viewModel.loading) {
             Box(
                 contentAlignment = Alignment.Center,
@@ -107,6 +114,7 @@ private fun Content() {
                 CircularProgressIndicator()
             }
         }
+
         Column(
             modifier = Modifier
                 .verticalScroll(state = scrollState)
@@ -115,50 +123,34 @@ private fun Content() {
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
-            DataForm(context, viewModel)
+
+            // API Key
+            APIKeyRow(context, viewModel, apiKey) {
+                apiKey = it
+            }
+
+            if (!viewModel.apiError) {
+
+                // 1
+                DataColumn(
+                    team,
+                    games,
+                    elements,
+                    onTeamChanged = { team = it},
+                    onGamesChanged = { games = it},
+                    onElementsChange = { elements = it}
+                )
+
+                // 2
+                InfoColumn(context, viewModel)
+
+
+                // 3
+                GeneratorColumn(context, viewModel, team, games, elements)
+            }
         }
     }
 
-}
-
-@Composable
-private fun DataForm(context: Context, viewModel: LogoGeneratorViewModel) {
-
-    var apiKey by remember { mutableStateOf("") }
-
-    var team by remember { mutableStateOf("") }
-    var games by remember { mutableStateOf("") }
-    var reference by remember { mutableStateOf("") }
-
-    var recorderText by remember { mutableStateOf("Iniciar grabación") }
-
-    val masked = remember { mutableStateOf(false) }
-    var image by remember { mutableStateOf("") }
-
-    // API Key
-    APIKeyRow(context, viewModel, apiKey) {
-        apiKey = it
-    }
-
-    if (!viewModel.apiError) {
-
-        // 1
-        DataColumn(team, games, reference,
-            onTeamChanged = { team = it},
-            onGamesChanged = { games = it},
-            onReferenceChanged = { reference = it}
-        )
-
-        // 2
-        InfoColumn(context, viewModel, recorderText, onRecorderTextChanged = { recorderText = it })
-
-
-        // 3
-        GeneratorColumn(context, viewModel, team, games, reference, masked.value, image,
-            onMaskedChanged = { masked.value = it },
-            onImageChanged = { image = it }
-        )
-    }
 }
 
 @Preview(showSystemUi = true)

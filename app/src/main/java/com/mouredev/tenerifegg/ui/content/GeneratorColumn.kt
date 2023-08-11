@@ -19,6 +19,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,12 +42,15 @@ import com.mouredev.tenerifegg.ui.components.TitleText
  * www.mouredev.com
  */
 @Composable
-fun GeneratorColumn(context: Context,
-                            viewModel: LogoGeneratorViewModel,
-                            team: String, games: String, reference: String,
-                            masked: Boolean, image: String,
-                            onMaskedChanged: (Boolean) -> Unit,
-                            onImageChanged: (String) -> Unit) {
+fun GeneratorColumn(
+    context: Context,
+    viewModel: LogoGeneratorViewModel,
+    team: String,
+    games: String,
+    elements: String) {
+
+    var imageURL by remember { mutableStateOf("") }
+    var masked by remember { mutableStateOf(false) }
 
     val clipboard = LocalClipboardManager.current
 
@@ -53,11 +60,13 @@ fun GeneratorColumn(context: Context,
 
         ActionButton(
             "Generar",
-            "Genera el logo",
-            team.isNotEmpty() && games.isNotEmpty() && reference.isNotEmpty(),
-            Icons.Filled.Draw
+            Icons.Filled.Draw,
+            "Genera el logotipo",
+            team.isNotEmpty() && games.isNotEmpty() && elements.isNotEmpty()
         ) {
-            viewModel.generateLogo(context, masked, games, reference, onImageChanged)
+            viewModel.generateLogo(context, games, elements, masked) {
+                imageURL = it
+            }
         }
 
         Row(
@@ -70,16 +79,13 @@ fun GeneratorColumn(context: Context,
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            Switch(
-                checked = masked,
-                onCheckedChange = onMaskedChanged
-            )
+            Switch(masked, onCheckedChange = { masked = it })
         }
 
-        if (image.isNotEmpty()) {
+        if (imageURL.isNotEmpty()) {
 
             AsyncImage(
-                model = image,
+                model = imageURL,
                 contentDescription = "$team logo",
                 modifier = Modifier.fillMaxSize()
             )
@@ -92,7 +98,7 @@ fun GeneratorColumn(context: Context,
 
                 IconButton(
                     onClick = {
-                        clipboard.setText(AnnotatedString(image))
+                        clipboard.setText(AnnotatedString(imageURL))
                         Toast.makeText(context, "URL copiada", Toast.LENGTH_LONG).show()
                     }
                 ) {
@@ -106,7 +112,7 @@ fun GeneratorColumn(context: Context,
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Text(
-                    "MoureDev",
+                    team,
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Black,
                     fontSize = 20.sp

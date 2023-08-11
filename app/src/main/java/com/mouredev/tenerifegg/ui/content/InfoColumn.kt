@@ -18,23 +18,23 @@ import com.mouredev.tenerifegg.ui.components.TitleText
  * www.mouredev.com
  */
 @Composable
-fun InfoColumn(context: Context,
-               viewModel: LogoGeneratorViewModel,
-               recorderText: String,
-               onRecorderTextChanged: (String) -> Unit) {
+fun InfoColumn(context: Context, viewModel: LogoGeneratorViewModel) {
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
         TitleText("2. Añade información")
 
-        ActionButton(recorderText, "Grabación", icon = Icons.Filled.Mic) {
-            onRecorderTextChanged(if (viewModel.recording) "Iniciar grabación" else "Detener grabación")
+        ActionButton(
+            if (viewModel.recording) "Detener grabación" else "Iniciar grabación",
+            Icons.Filled.Mic,
+            "Grabación de audio") {
+
             viewModel.recordAudio(context)
         }
 
         if (viewModel.info.isNotEmpty()) {
 
-            ActionButton("Resumir", "Resumen", icon = Icons.Filled.Compress) {
+            ActionButton("Resumir", Icons.Filled.Compress,"Resume la grabación") {
                 viewModel.createInfoSummary()
             }
 
